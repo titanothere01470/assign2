@@ -1,4 +1,4 @@
-
+//You should implement your assign2 here.
 final int GAME_START= 0 , GAME_RUN = 1 , GAME_LOSE = 2;
 PImage shipImg;
 PImage background1;
@@ -34,7 +34,7 @@ void setup () {
   z = 40; 
   sx = 580;
   sy = 240;
-  speed = 2;
+  speed = 3;
   shipImg = loadImage("img/fighter.png");
   background1 = loadImage("img/bg1.png");
   background2 = loadImage("img/bg2.png");
@@ -79,7 +79,7 @@ void draw() {
       //ship control
       if(upPressed){
         sy += -speed;            
-       }
+      }
       if(downPressed){
         sy += speed;        
       }
@@ -89,11 +89,26 @@ void draw() {
       if(leftPressed){
         sx += -speed;
       }
+     
+     // boundry detection
+     if(sy < 5){              // ship Y boundry detection
+          sy = 5;
+      }  
+      if(sy > height-55){       // ship Y boundry detection
+          sy = height-55;
+      }
+      if(sx > width-50){        // ship X boundry detection
+          sx = width-50;
+      }  
+      if(sx < 5){              // ship X boundry detection
+          sx = 5;
+      }     
+      // hit enemy      
       if( sx < ex+55 && sx > ex-40 && sy < ey+40 && sy > ey-35 ){
         z -= 40;
         ex =0;
         ey = floor(random(0,400));
-        if(z == 0){
+        if(z <= 0){
         gameState = GAME_LOSE;
         //game restart
         ex =0;
@@ -119,8 +134,12 @@ void draw() {
       
       //enemy
       image (enemy,ex,ey);
-      ex +=2;
-      ex %=640;        
+      ex += 2;
+      ex %= 640;      
+      if(ex % 640 == 0){
+        ey = floor(random(0,400));
+      }
+      ey += (sy - ey)/20;
       break;      
       
     case GAME_LOSE:
@@ -139,28 +158,16 @@ void keyPressed(){
   if(key == CODED){ 
     switch(keyCode){
       case UP:
-        upPressed = true;
-        if(sy < 15){              // ship Y boundry detection
-          upPressed = false;
-        }  
+        upPressed = true;        
         break;
       case DOWN:
-        downPressed = true;
-        if(sy > height-55){       // ship Y boundry detection
-          downPressed = false;
-        }  
+        downPressed = true;        
         break;
       case RIGHT:
-        rightPressed = true;
-        if(sx > width-50){        // ship X boundry detection
-          rightPressed = false;
-        }  
+        rightPressed = true;        
         break;
       case LEFT:
-        leftPressed = true;
-        if(sx < 10){              // ship X boundry detection
-          leftPressed = false;
-        }  
+        leftPressed = true;        
         break;      
     } 
   }
