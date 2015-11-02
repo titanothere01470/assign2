@@ -52,9 +52,9 @@ void draw() {
   //game start
   switch(gameState){
     case GAME_START:
-      image (start1,0,0);
+      image (start2,0,0);
       if( mouseX>200 && mouseX<460 && mouseY>358 && mouseY<415  ){
-        image (start2,0,0);
+        image (start1,0,0);
         if(mousePressed){
           gameState = GAME_RUN;
         }
@@ -143,9 +143,9 @@ void draw() {
       break;      
       
     case GAME_LOSE:
-      image (end1,0,0);      
+      image (end2,0,0);      
       if(mouseX>200 && mouseX<440 && mouseY>300 && mouseY<350){
-        image (end2,0,0);
+        image (end1,0,0);
         if(mousePressed){
           gameState = GAME_RUN;
         }
